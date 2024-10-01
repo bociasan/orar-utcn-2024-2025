@@ -1,0 +1,45 @@
+.weeks-card {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    /* max-width: 450px; */
+    align-self: center;
+}
+
+.academic-year {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.weeks-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.header-cell {
+    border: 1px solid #00000035;
+    padding: 10px; 
+    color: white;
+}
+
+.even-row {
+    background-color: rgba(0, 128, 0, 0.25); /* Light grey for even weeks */
+}
+
+.odd-row { /*FF5722*/
+    background-color: rgba(255, 87, 34, 0.175); /* White for odd weeks */
+}
+
+.vacation-row {
+    background-color: #800080BB; /* Purple for vacation weeks */
+    color: white; /* White text for better contrast */
+}
+
+.vacation-cell {
+    text-align: center;
+    padding: 10px;
+}
+
+.week-cell, .interval-cell {
+    border: 1px solid #00000035;
+    padding: 10px;
+}

@@ -1,0 +1,72 @@
+.schedule-card {
+    border: 1px solid #ccc;
+    /* padding: 16px; */
+    margin: 10px 2px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 130px;
+}
+
+.card-header {
+    border-radius: 8px 0px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px;
+    text-align: center;
+}
+
+.card-body {
+    padding: 0px 8px;
+}
+
+.subject-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 8px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* background-color: #f9f9f9; */
+    transition: background-color 0.3s ease;
+}
+
+.subject-item:hover {
+    background-color: #f1f1f1;
+}
+
+.subject-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 8px; */
+    width: inherit;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.subject-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    /* margin-right: 10px; */
+
+}
+
+.subject-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    font-size: 14px;
+}
+
+.subject-type, .subject-cab {
+    color: #555;
+}
+
+.subject-program {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    margin-top: 8px;
+}
+

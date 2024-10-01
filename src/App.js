@@ -1,24 +1,46 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
-
+import ScheduleCard from './components/ScheduleCard';
+import WeeksCard from './components/WeeksCard';
+import { provisions } from './data';
 function App() {
+  let weekNumber = 1
+  let weekStart = provisions.weeks.find(w => w.week == weekNumber).start
+  const [now, setNow] = useState(new Date()) 
+  let crtDate = now.toISOString().split('T')[0]
+  let crtTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+  // let crtDate =  //'2024-10-10'
+  // let crtTime = //'19:45'
+
+  const update = () => setTimeout(()=>{
+    setNow(new Date())
+    console.log('updating')
+    update()
+  }, 1000)
+
+  useEffect(()=>{
+    update()
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div style={{ textAlign: 'center', margin: '20px 0' }}>
+            <h1>{`Săptămâna ${weekNumber}`}</h1>
+            <p>{`${crtDate} ${crtTime}`}</p>
+      </div>
+      <div style={{display: 'flex', flexWrap: 'wrap', textAlign:'center', justifyContent: 'center'}}>
+      {
+        provisions.weekNamesRo.map((el, idx) => {
+          // console.log(el, provisions.schedule[el])
+          if (el in provisions.schedule)
+          return <ScheduleCard key={el} dayIdx={idx} day={el} crtDate={crtDate} schedule={provisions.schedule[el]} weekNumber={weekNumber} weekStart={weekStart} crtTime={crtTime}/>
+          else return ''
+        })
+      }
+      </div >
+    
+      <WeeksCard weekNumber={weekNumber}/>
+      </div>
   );
 }
 
