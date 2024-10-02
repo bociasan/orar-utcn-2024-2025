@@ -7,13 +7,15 @@ function App() {
   let weekNumber = 1
   let weekStart = provisions.weeks.find(w => w.week == weekNumber).start
   const [now, setNow] = useState(new Date()) 
-  let crtDate = now.toISOString().split('T')[0]
-  let crtTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+  const [crtDate, setCrtDate] = useState(now.toISOString().split('T')[0])
+  const [crtTime, setCrtTime] = useState(`${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`)
   // let crtDate =  //'2024-10-10'
   // let crtTime = //'19:45'
 
   const update = () => setTimeout(()=>{
     setNow(new Date())
+    setCrtDate(now.toISOString().split('T')[0])
+    setCrtTime(`${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`)
     console.log('updating')
     update()
   }, 1000)
