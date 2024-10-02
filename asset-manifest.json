@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/orar-utcn-2024-2025/static/css/main.fa99d11a.css",
-    "main.js": "/orar-utcn-2024-2025/static/js/main.9caabe49.js",
+    "main.css": "/orar-utcn-2024-2025/static/css/main.23e3543d.css",
+    "main.js": "/orar-utcn-2024-2025/static/js/main.a03ace40.js",
     "static/js/453.bb1c87eb.chunk.js": "/orar-utcn-2024-2025/static/js/453.bb1c87eb.chunk.js",
     "index.html": "/orar-utcn-2024-2025/index.html",
-    "main.fa99d11a.css.map": "/orar-utcn-2024-2025/static/css/main.fa99d11a.css.map",
-    "main.9caabe49.js.map": "/orar-utcn-2024-2025/static/js/main.9caabe49.js.map",
+    "main.23e3543d.css.map": "/orar-utcn-2024-2025/static/css/main.23e3543d.css.map",
+    "main.a03ace40.js.map": "/orar-utcn-2024-2025/static/js/main.a03ace40.js.map",
     "453.bb1c87eb.chunk.js.map": "/orar-utcn-2024-2025/static/js/453.bb1c87eb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fa99d11a.css",
-    "static/js/main.9caabe49.js"
+    "static/css/main.23e3543d.css",
+    "static/js/main.a03ace40.js"
   ]
 }
