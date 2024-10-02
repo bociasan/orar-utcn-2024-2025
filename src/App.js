@@ -4,11 +4,19 @@ import ScheduleCard from './components/ScheduleCard';
 import WeeksCard from './components/WeeksCard';
 import { provisions } from './data';
 function App() {
-  let weekNumber = 1
-  let weekStart = provisions.weeks.find(w => w.week == weekNumber).start
+
   const [now, setNow] = useState(new Date()) 
   const [crtDate, setCrtDate] = useState(now.toISOString().split('T')[0])
   const [crtTime, setCrtTime] = useState(`${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`)
+
+  let weekNumber = provisions.weeks.find(w => {
+    const weekEndDate = new Date(w.end);
+    // weekEndDate.setHours(23, 59, 59, 999);
+    const date = new Date(crtDate) 
+    console.log(date, weekEndDate)
+    return new Date(w.start) <= date && date <= weekEndDate; })?.week
+  let weekStart = provisions.weeks.find(w => w?.week == weekNumber)?.start
+
   // let crtDate =  //'2024-10-10'
   // let crtTime = //'19:45'
 
