@@ -42,7 +42,15 @@ function App() {
       </div >
     
       <WeeksCard weekNumber={weekNumber}/>
-      </div>
+    
+      {
+        window.innerWidth > window.innerHeight ? provisions.weeks.map(week => {return week.week != 'vacation' ? <div style={{display:' flex', flexDirection:'row'}}><div style={{display: 'flex', alignItems: 'center'}}>{week.week}</div>{provisions.weekNamesRo.map((el, idx) => {
+          if (el in provisions.schedule)
+            return <ScheduleCard key={el} dayIdx={idx} day={el} crtDate={crtDate} schedule={provisions.schedule[el]} weekNumber={week.week} weekStart={week.start} crtTime={crtTime}/>
+            else return ''
+        })}</div> : ''}) : ''
+      }
+    </div>
   );
 }
 
