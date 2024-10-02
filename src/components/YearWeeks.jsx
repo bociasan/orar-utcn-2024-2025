@@ -1,24 +1,22 @@
 import React from 'react';
 import { provisions } from '../data'; // Adjust the import path as needed
-import './WeeksCard.css'; // Import a CSS file for additional styling
+import './YearWeeks.css'; // Import a CSS file for additional styling
 
-export default function WeeksCard({weekNumber}) {
-    const academicYear = "Anul universitar 2024-2025";
+export const formatDateRange = (start, end) => {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
 
-    const formatDateRange = (start, end) => {
-        const startDate = new Date(start);
-        const endDate = new Date(end);
-    
-        const monthNames = ["ian", "feb", "mart", "apr", "mai", "iun", "iul", "aug", "sep", "oct", "noi", "dec"];
-        const formattedStart = `${startDate.getDate()} ${monthNames[startDate.getMonth()]}`;
-        const formattedEnd = `${endDate.getDate()} ${monthNames[endDate.getMonth()]}`;
-    
-        return `${formattedStart} - ${formattedEnd}`;
-    };
+    const monthNames = ["ian", "feb", "mart", "apr", "mai", "iun", "iul", "aug", "sep", "oct", "noi", "dec"];
+    const formattedStart = `${startDate.getDate()} ${monthNames[startDate.getMonth()]}`;
+    const formattedEnd = `${endDate.getDate()} ${monthNames[endDate.getMonth()]}`;
 
+    return `${formattedStart} - ${formattedEnd}`;
+};
+
+export default function YearWeeks({weekNumber}) {
     return (
         <div className="weeks-card">
-            <h2 className="academic-year">{academicYear}</h2>
+            <h2 className="academic-year">Anul universitar 2024-2025</h2>
             <table className="weeks-table" style={{borderRadius: '8px 0px', overflow:'hidden'}}>
                 <thead>
                     <tr style={{backgroundColor:  weekNumber % 2 ?'#FF5722':'#4CAF50'}}>
@@ -30,9 +28,9 @@ export default function WeeksCard({weekNumber}) {
                     {provisions.weeks.map((week, index) => (
                         <tr
                             key={index}
-                            className={week.week == 'vacation' ? 'vacation-row' : (week.week % 2 === 0 ? 'even-row' : 'odd-row')}
+                            className={week.week === 'vacation' ? 'vacation-row' : (week.week % 2 === 0 ? 'even-row' : 'odd-row')}
                         >
-                            {week.week == 'vacation' ? (
+                            {week.week === 'vacation' ? (
                                 <td colSpan="2" className="vacation-cell">
                                     Vacanță {formatDateRange(week.start, week.end)}
                                 </td>

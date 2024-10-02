@@ -6,3 +6,24 @@
   flex-direction: column;
   align-items: center;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&display=swap'); /* Import urbanistic font */
+
+.time-display {
+  font-family: 'Oswald', sans-serif; /* Urbanistic font */
+  font-size: 26px; /* Large font size for visibility */
+  font-weight: 500; /* Medium weight for balance */
+  color: #fff; /* White text for high contrast */
+  background-color: #1e1e1e; /* Dark background to give a city-like vibe */
+  padding: 10px 20px; /* Spacing around the text */
+  border-radius: 8px; /* Subtle rounding for smooth corners */
+  text-align: center; /* Center-align the text */
+  letter-spacing: 1px; /* Slight spacing for readability */
+  text-transform: uppercase; /* Uppercase for a bold look */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Shadow to add depth */
+  display: inline-block; /* Fit the content size */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transition */
+  width: 240px;
+  margin-block-start: 0.2em;
+  margin-block-end: 1.3em;
+}

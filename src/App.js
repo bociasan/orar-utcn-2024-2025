@@ -1,62 +1,65 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import ScheduleCard from './components/ScheduleCard';
-import WeeksCard from './components/WeeksCard';
+import YearWeeks from './components/YearWeeks';
 import { provisions } from './data';
+import WeekCard from './components/WeekCard';
+import { getLocalISO } from './components/ScheduleCard';
 function App() {
-
-  const [now, setNow] = useState(new Date()) 
-  const [crtDate, setCrtDate] = useState(now.toISOString().split('T')[0])
+  const DEBUG = false
+  const debugDate = '2024-12-16T11:00'
+  const debugStartTime = new Date()
+  const [now, setNow] = useState(DEBUG ? new Date(debugDate) : debugStartTime)
+  const [crtDate, setCrtDate] = useState(getLocalISO(now).split('T')[0])
   const [crtTime, setCrtTime] = useState(`${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`)
 
-  let weekNumber = provisions.weeks.find(w => {
-    const weekEndDate = new Date(w.end);
-    // weekEndDate.setHours(23, 59, 59, 999);
-    const date = new Date(crtDate) 
-    console.log(date, weekEndDate)
-    return new Date(w.start) <= date && date <= weekEndDate; })?.week
-  let weekStart = provisions.weeks.find(w => w?.week == weekNumber)?.start
+  let crtWeek = provisions.weeks.find(w => {
+    const date = new Date(crtDate)
+    return new Date(w.start) <= date && date <= new Date(w.end)
+  })
 
-  // let crtDate =  //'2024-10-10'
-  // let crtTime = //'19:45'
+  // console.log(crtDate)
 
-  const update = () => setTimeout(()=>{
-    setNow(new Date())
-    setCrtDate(now.toISOString().split('T')[0])
-    setCrtTime(`${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`)
-    console.log('updating')
-    update()
-  }, 1000)
+  if (!crtWeek) {
+    let crtWeekIdx = 1
+    crtWeek = provisions.weeks.find(w => w.week === crtWeekIdx)
+    provisions.weeks.forEach(w => {
+      if (new Date(w.end) <= new Date(crtDate)) { crtWeekIdx = w.week; crtWeek = w; }
+    })
+  }
 
-  useEffect(()=>{
-    update()
-  }, [])
+  let weekNumber = crtWeek.week
+
+
+  const update = () => {
+    const time = DEBUG ? new Date(new Date(debugDate).getTime() + Math.trunc(((new Date().getTime() - new Date(debugStartTime).getTime()) / 1000)) * 24 * 60 * 60 * 1000) : new Date();
+
+    setNow(time);
+    setCrtDate(getLocalISO(time).split('T')[0]);
+    setCrtTime(
+      `${String(time.getHours()).padStart(2, '0')}:${String(time.getMinutes()).padStart(2, '0')}:${String(time.getSeconds()).padStart(2, '0')}`
+    );
+    // console.log('updating');
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(update, 1000); // Use setInterval instead of recursive setTimeout
+
+    return () => clearInterval(intervalId); // Cleanup on component unmount
+  }, []);
 
   return (
     <div className="App">
-      <div style={{ textAlign: 'center', margin: '20px 0' }}>
-            <h1>{`Săptămâna ${weekNumber}`}</h1>
-            <p>{`${crtDate} ${crtTime}`}</p>
-      </div>
-      <div style={{display: 'flex', flexWrap: 'wrap', textAlign:'center', justifyContent: 'center'}}>
-      {
-        provisions.weekNamesRo.map((el, idx) => {
-          // console.log(el, provisions.schedule[el])
-          if (el in provisions.schedule)
-          return <ScheduleCard key={el} dayIdx={idx} day={el} crtDate={crtDate} schedule={provisions.schedule[el]} weekNumber={weekNumber} weekStart={weekStart} crtTime={crtTime}/>
-          else return ''
-        })
-      }
+      <div style={{fontWeight: 'bold', fontSize: '2em', marginBlockStart: '1.5em'}}>{crtWeek.week !== 'vacation' ? `SĂPTĂMÂNA ${weekNumber}` : 'VACANȚĂ'}</div>
+      <div className="time-display">{`${crtDate} ${crtTime}`}</div>
+      
+      <div style={{ display: 'flex', flexWrap: 'wrap', textAlign: 'center', justifyContent: 'center' }}>
+        {
+          <WeekCard week={crtWeek} crtDate={crtDate} crtTime={crtTime} />
+        }
       </div >
-    
-      <WeeksCard weekNumber={weekNumber}/>
-    
+      <YearWeeks weekNumber={weekNumber} />
       {
-        window.innerWidth > window.innerHeight ? provisions.weeks.map(week => {return week.week != 'vacation' ? <div style={{display:' flex', flexDirection:'row'}}><div style={{display: 'flex', alignItems: 'center'}}>{week.week}</div>{provisions.weekNamesRo.map((el, idx) => {
-          if (el in provisions.schedule)
-            return <ScheduleCard key={el} dayIdx={idx} day={el} crtDate={crtDate} schedule={provisions.schedule[el]} weekNumber={week.week} weekStart={week.start} crtTime={crtTime}/>
-            else return ''
-        })}</div> : ''}) : ''
+        1 || (window.innerWidth > window.innerHeight) ? provisions.weeks.map((week, idx) => <WeekCard key={`${week.week}${idx + 1}`} week={week} crtDate={crtDate} crtTime={crtTime} showWeekNr={true} showWeekInterval={true} />) : ''
       }
     </div>
   );
